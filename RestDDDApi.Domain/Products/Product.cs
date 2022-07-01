@@ -8,12 +8,12 @@ namespace RestDDDApi.Domain.Products
 {
     public class Product
     {
-        public ProductID productID { get; private set; }
+        public Guid productID { get; private set; }
         public ProductData productData { get; set; }
         private Product() { }
         private Product(ProductData productData)
         {
-            this.productID = new ProductID(Guid.NewGuid());
+            this.productID = Guid.NewGuid();
             this.productData = productData;
         }
 

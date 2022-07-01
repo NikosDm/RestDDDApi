@@ -9,9 +9,9 @@ namespace RestDDDApi.Domain.Products.Interfaces
     public interface IProductRepository
     {
         Task<IEnumerable<Product>> GetAllProducts();
-        Task<Product> GetProductsById(ProductID productID);
+        Task<Product> GetProductsById(Guid productID);
         Task<Product> AddNewProduct(ProductData productData);
         Task<Product> UpdateProduct(ProductData productData);
-        Task DeleteProduct(ProductID productID);
+        Task DeleteProduct(Guid productID);
     }
 }

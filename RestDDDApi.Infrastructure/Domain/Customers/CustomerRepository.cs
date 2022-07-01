@@ -25,7 +25,7 @@ namespace RestDDDApi.Infrastructure.Domain.Customers
             return customer;
         }
 
-        public async Task<Order> AddNewOrderForCustomer(CustomerID customerID, OrderData orderData, IEnumerable<OrderProductData> productDatas)
+        public async Task<Order> AddNewOrderForCustomer(Guid customerID, OrderData orderData, IEnumerable<OrderProductData> productDatas)
         {
             var customer = await _context.Customers.FindAsync(customerID);
             Order order = customer.placeNewOrder(orderData, productDatas);
@@ -34,20 +34,20 @@ namespace RestDDDApi.Infrastructure.Domain.Customers
             return order;
         }
 
-        public async Task<OrderItem> AddNewOrderItemOnOrder(CustomerID customerID, OrderID orderID, OrderProductData productData)
+        public async Task<OrderItem> AddNewOrderItemOnOrder(Guid customerID, Guid orderID, OrderProductData productData)
         {
             var customer = await _context.Customers.FindAsync(customerID);
             OrderItem orderItem = customer.addNewOrderItemOnCustomerOrder(orderID, productData);
             return orderItem;
         }
 
-        public async Task DeleteCustomer(CustomerID customerID)
+        public async Task DeleteCustomer(Guid customerID)
         {
             var customer = await _context.Customers.FindAsync(customerID);
             _context.Customers.Remove(customer);
         }
 
-        public async Task DeleteOrderFromCustomer(CustomerID customerID, OrderID orderID)
+        public async Task DeleteOrderFromCustomer(Guid customerID, Guid orderID)
         {
             var customer = await _context.Customers.FindAsync(customerID);
             customer.deleteOrder(orderID);
@@ -58,19 +58,19 @@ namespace RestDDDApi.Infrastructure.Domain.Customers
             return await _context.Customers.Include(x => x.orders).ToListAsync();
         }
 
-        public async Task<IEnumerable<Order>> GetCustomerOrdersByCustomerID(CustomerID customerID)
+        public async Task<IEnumerable<Order>> GetCustomerOrdersByCustomerID(Guid customerID)
         {
             var customer = await _context.Customers.FindAsync(customerID);
             return customer.orders;
         }
 
-        public async Task<IEnumerable<OrderItem>> GetOrderItemsPerOrder(CustomerID customerID, OrderID orderID)
+        public async Task<IEnumerable<OrderItem>> GetOrderItemsPerOrder(Guid customerID, Guid orderID)
         {
             var customer = await _context.Customers.FindAsync(customerID);
             return customer.orders.Where(x => x.orderID == orderID).First().orderItems;
         }
 
-        public async Task<Customer> UpdateCustomerDetails(CustomerID customerID, CustomerAddress address, CustomerFullName fullName)
+        public async Task<Customer> UpdateCustomerDetails(Guid customerID, CustomerAddress address, CustomerFullName fullName)
         {
             var customer = await _context.Customers.FindAsync(customerID);
             customer.UpdateCustomerDetails(fullName, address);
@@ -79,7 +79,7 @@ namespace RestDDDApi.Infrastructure.Domain.Customers
             return customer;
         }
 
-        public async Task<Order> UpdateCustomerOrder(CustomerID customerID, OrderID orderID,  OrderData orderData, IEnumerable<OrderProductData> productDatas)
+        public async Task<Order> UpdateCustomerOrder(Guid customerID, Guid orderID,  OrderData orderData, IEnumerable<OrderProductData> productDatas)
         {
             var customer = await _context.Customers.FindAsync(customerID);
             var updatedOrder = customer.UpdateCustomerOrder(orderID, orderData, productDatas);
@@ -88,7 +88,7 @@ namespace RestDDDApi.Infrastructure.Domain.Customers
             return updatedOrder;
         }
 
-        public async Task<OrderItem> UpdateOrderItemOnCustomerOrder(CustomerID customerID, OrderID orderID, OrderItemID orderItemID, OrderProductData productData)
+        public async Task<OrderItem> UpdateOrderItemOnCustomerOrder(Guid customerID, Guid orderID, Guid orderItemID, OrderProductData productData)
         {
             var customer = await _context.Customers.FindAsync(customerID);
             var updatedItem = customer.UpdateOrderItemOnSelectedOrder(orderID, orderItemID, productData);

@@ -8,13 +8,13 @@ namespace RestDDDApi.Domain.Customers.Orders
 {
     public class Order
     {
-        public OrderID orderID { get; private set; }
+        public Guid orderID { get; private set; }
         private OrderData orderData { get; set; }
         public List<OrderItem> orderItems { get; set; }
         private Order() { }
         private Order(OrderData orderData, IEnumerable<OrderProductData> productDatas)
         {
-            this.orderID = new OrderID(Guid.NewGuid());
+            this.orderID = Guid.NewGuid();
             
             this.orderData = orderData;
             this.orderItems = new List<OrderItem>();
@@ -44,7 +44,7 @@ namespace RestDDDApi.Domain.Customers.Orders
             }
         }
 
-        public OrderItem updateOrderItem(OrderItemID orderItemID, OrderProductData productData) 
+        public OrderItem updateOrderItem(Guid orderItemID, OrderProductData productData) 
         {
             OrderItem item = null;
             foreach (var orderItem in this.orderItems.Where(x => x.orderItemID == orderItemID)){

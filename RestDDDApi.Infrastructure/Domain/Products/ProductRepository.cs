@@ -25,7 +25,7 @@ namespace RestDDDApi.Infrastructure.Domain.Products
             return customer;
         }
 
-        public async Task DeleteProduct(ProductID productID)
+        public async Task DeleteProduct(Guid productID)
         {
             var product = await _context.Products.FindAsync(productID);
             _context.Products.Remove(product);
@@ -36,7 +36,7 @@ namespace RestDDDApi.Infrastructure.Domain.Products
             return await _context.Products.ToListAsync();
         }
 
-        public async Task<Product> GetProductsById(ProductID productID)
+        public async Task<Product> GetProductsById(Guid productID)
         {
             return await _context.Products.FindAsync(productID);
         }

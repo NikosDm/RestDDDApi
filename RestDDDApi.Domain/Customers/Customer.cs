@@ -8,14 +8,14 @@ namespace RestDDDApi.Domain.Customers
 {
     public class Customer
     {
-        public CustomerID customerID { get; private set; }
+        public Guid customerID { get; private set; }
         private CustomerFullName fullName { get; set; }
         private CustomerAddress address { get; set; }
         public List<Order> orders { get; private set; }
         private Customer() { }
         private Customer(CustomerFullName fullName, CustomerAddress address)
         {
-            this.customerID = new CustomerID(Guid.NewGuid());
+            this.customerID = Guid.NewGuid();
             this.fullName = fullName;
             this.address = address;
             this.orders = new List<Order>();
@@ -39,7 +39,7 @@ namespace RestDDDApi.Domain.Customers
             this.address.UpdateAddress(address);
         }
 
-        public OrderItem addNewOrderItemOnCustomerOrder(OrderID orderID, OrderProductData productData) 
+        public OrderItem addNewOrderItemOnCustomerOrder(Guid orderID, OrderProductData productData) 
         {
             OrderItem item = null;
             foreach (var order in this.orders.Where(x => x.orderID == orderID))
@@ -48,7 +48,7 @@ namespace RestDDDApi.Domain.Customers
             return item; 
         }
 
-        public Order UpdateCustomerOrder(OrderID orderID,  OrderData orderData, IEnumerable<OrderProductData> productDatas) 
+        public Order UpdateCustomerOrder(Guid orderID,  OrderData orderData, IEnumerable<OrderProductData> productDatas) 
         {
             Order item = null;
             foreach (var order in this.orders.Where(x => x.orderID == orderID))
@@ -57,7 +57,7 @@ namespace RestDDDApi.Domain.Customers
             return item; 
         }
 
-        public OrderItem UpdateOrderItemOnSelectedOrder(OrderID orderID, OrderItemID orderItemID, OrderProductData productData) 
+        public OrderItem UpdateOrderItemOnSelectedOrder(Guid orderID, Guid orderItemID, OrderProductData productData) 
         {
             OrderItem item = null;
             foreach (var order in this.orders.Where(x => x.orderID == orderID))
@@ -66,7 +66,7 @@ namespace RestDDDApi.Domain.Customers
             return item; 
         }
 
-        public void deleteOrder(OrderID orderID)
+        public void deleteOrder(Guid orderID)
         {
             this.orders = orders.Where(x => x.orderID != orderID).ToList();
         }

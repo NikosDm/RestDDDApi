@@ -45,11 +45,9 @@ namespace RestDDDApi.Infrastructure.Domain.Customers
 
                 x.OwnsMany<OrderItem>("orderItems", y =>
                 {
-                    y.WithOwner().HasForeignKey("OrderID");
-                    
-                    y.HasKey(o => o.orderItemID).HasName("OrderItemID");
+                    y.ToTable("OrderItems");
 
-                    y.ToTable("OrderItem");
+                    y.HasKey(o => o.orderItemID).HasName("OrderItemID");
 
                     y.OwnsOne<OrderProductData>("productData", op => 
                     {
