@@ -8,7 +8,12 @@ namespace RestDDDApi.Domain.Customers.Orders
 {
     public class OrderProductData
     {
-        public ProductID ProductID { get; set; }
+        public ProductID productID { get; set; }
         public int Quantity  { get; set; }
+        public void UpdateOrderProductData(OrderProductData productData) 
+        {
+            this.productID.UpdateProductID(productData.productID);
+            this.Quantity = productData.Quantity;
+        }
     }
 }

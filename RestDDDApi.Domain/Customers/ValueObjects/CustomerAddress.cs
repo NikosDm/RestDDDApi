@@ -8,7 +8,12 @@ namespace RestDDDApi.Domain.Customers
     public class CustomerAddress
     {
         public string Street { get; set; }
-        public int StreetNumber { get; set; }
         public string PostalCode { get; set; }
+        
+        public void UpdateAddress(CustomerAddress customerAddress)
+        {
+            this.Street = customerAddress.Street;
+            this.Street = customerAddress.Street;
+        }
     }
 }

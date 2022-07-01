@@ -9,5 +9,10 @@ namespace RestDDDApi.Domain.Customers.Orders
     {
         public DateTime OrderDate { get; set; }
         public Double TotalPrice { get; set; }
+        public void UpdateOrderData(DateTime orderDate, Double totalPrice)
+        {
+            this.OrderDate = orderDate;
+            this.TotalPrice = totalPrice;
+        } 
     }
 }

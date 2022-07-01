@@ -8,5 +8,12 @@ namespace RestDDDApi.Domain.Customers.Orders
     public class OrderID
     {
         public Guid orderID { get; set; }
+
+        public OrderID() { }
+
+        public OrderID(Guid guid) 
+        {
+            this.orderID = guid;
+        }
     }
 }

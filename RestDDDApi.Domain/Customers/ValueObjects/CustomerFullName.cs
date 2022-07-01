@@ -9,5 +9,11 @@ namespace RestDDDApi.Domain.Customers
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public void UpdateFullName(CustomerFullName customerFullName)
+        {
+            this.FirstName = customerFullName.FirstName;
+            this.LastName = customerFullName.LastName;
+        }
     }
 }
