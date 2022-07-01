@@ -41,9 +41,12 @@ namespace RestDDDApi.Infrastructure.Domain.Products
             return await _context.Products.FindAsync(productID);
         }
 
-        public async Task<Product> UpdateProduct(ProductData productData)
+        public async Task<Product> UpdateProduct(Guid productID, ProductData productData)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products.FindAsync(productID);
+            product.updateProductData(productData);
+            _context.Products.Update(product);
+            return product;
         }
     }
 }

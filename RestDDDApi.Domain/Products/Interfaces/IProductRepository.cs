@@ -11,7 +11,7 @@ namespace RestDDDApi.Domain.Products.Interfaces
         Task<IEnumerable<Product>> GetAllProducts();
         Task<Product> GetProductsById(Guid productID);
         Task<Product> AddNewProduct(ProductData productData);
-        Task<Product> UpdateProduct(ProductData productData);
+        Task<Product> UpdateProduct(Guid productID, ProductData productData);
         Task DeleteProduct(Guid productID);
     }
 }

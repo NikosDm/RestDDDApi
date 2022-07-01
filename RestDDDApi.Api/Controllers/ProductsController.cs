@@ -63,11 +63,11 @@ public class ProductsController : BaseApiController
     }
     
     [HttpPut("UpdateProduct")]
-    public async Task<ActionResult<ResponseDTO>> UpdateProduct([FromBody]ProductData productData) 
+    public async Task<ActionResult<ResponseDTO>> UpdateProduct([FromBody]ProductDetailsDTO productData) 
     {
         try 
         {
-            var product =  await _unitOfWork.productRepository.UpdateProduct(productData);
+            var product =  await _unitOfWork.productRepository.UpdateProduct(productData.ProductID, productData.ProductData);
 
             if (_unitOfWork.HasChanges()) await _unitOfWork.Complete();
 

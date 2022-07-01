@@ -9,7 +9,7 @@ namespace RestDDDApi.Domain.Customers.Orders
     public class Order
     {
         public Guid orderID { get; private set; }
-        private OrderData orderData { get; set; }
+        public OrderData orderData { get; private set; }
         public List<OrderItem> orderItems { get; set; }
         private Order() { }
         private Order(OrderData orderData, IEnumerable<OrderProductData> productDatas)
