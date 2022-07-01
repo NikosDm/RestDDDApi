@@ -6,6 +6,10 @@ using RestDDDApi.Domain.Products.ValueObjects;
 
 namespace RestDDDApi.Domain.Products
 {
+    /// <summary>
+    /// Aggregate root object
+    /// Represents Item or Product of an order
+    /// </summary>
     public class Product
     {
         public Guid productID { get; private set; }

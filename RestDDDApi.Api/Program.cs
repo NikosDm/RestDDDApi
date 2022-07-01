@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RestDDDApi.Api.Data;
 using RestDDDApi.Domain.Interfaces;
 using RestDDDApi.Infrastructure.Database;
 using RestDDDApi.Infrastructure.Domain.UnitOfWork;
@@ -7,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),  b => b.MigrationsAssembly("RestDDDApi.Api")));
+// builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),  b => b.MigrationsAssembly("RestDDDApi.Api")));
+builder.Services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase(databaseName: "RestDDDApiTest"));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -19,7 +21,8 @@ try
 {
     using var scope = app.Services.CreateScope();
     var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
-    await dataContext.Database.MigrateAsync();
+    // await dataContext.Database.MigrateAsync();
+    await Seed.SeedData(dataContext);
 }
 catch(Exception ex)
 {

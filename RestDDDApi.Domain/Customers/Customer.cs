@@ -6,6 +6,10 @@ using RestDDDApi.Domain.Customers.Orders;
 
 namespace RestDDDApi.Domain.Customers
 {
+    /// <summary>
+    /// Aggregate root object
+    /// Represents Customer who makes new orders
+    /// </summary>
     public class Customer
     {
         public Guid customerID { get; private set; }
