@@ -16,6 +16,9 @@ using RestDDDApi.Infrastructure.Domain.Products;
 
 namespace Tests
 {
+    /// <summary>
+    /// Customer Unit Tests
+    /// </summary>
     public class CustomerUnitTest
     {
        private static DbContextOptions<DataContext> dbContextOptions = new DbContextOptionsBuilder<DataContext>()
@@ -36,7 +39,12 @@ namespace Tests
 
             SeedDatabase();
         }
-        
+            
+        /// <summary>
+        /// For the inserted customer orders
+        /// Verify that each Orders Total Price is equal to the sum of Products 
+        /// that are included on the order 
+        /// </summary>
         [Test, Order(1)]
         public async Task CheckOrdersOfCustomers()
         {
@@ -53,6 +61,9 @@ namespace Tests
             }
         }
         
+        /// <summary>
+        /// Check that new orders are stored correctly on database
+        /// </summary>
         [Test, Order(2)]
         public async Task PlaceNewOrderForEachCustomer()
         {
@@ -63,13 +74,18 @@ namespace Tests
             {
                 customerOrders = customer.orders.Count;
 
-                var order = await customerRepository.AddNewOrderForCustomer(customer.customerID, new OrderData { OrderDate = DateTime.Now, TotalPrice = 100.00 }, new List<OrderProductData>() { 
-                    new OrderProductData { productID = products.ToList()[3].productID, Quantity = 2 } });
+                var order = await customerRepository.AddNewOrderForCustomer(customer.customerID, OrderData.createOrderData(DateTime.Now), new List<OrderProductData>() { 
+                    OrderProductData.createNewOrderProductData(products.ToList()[3].productID, 2, products.ToList()[3].productData.Price)}
+                );
 
                 Assert.AreEqual(customerOrders + 1, customer.orders.Count);
+                Assert.That(order.orderID, Is.Not.Empty);
             }
         }
-
+        
+        /// <summary>
+        /// Check that order is deleted successfully
+        /// </summary>
         [Test, Order(3)]
         public async Task DeleteLastOrder()
         {
@@ -83,7 +99,6 @@ namespace Tests
             }
         }
 
-
         [OneTimeTearDown]
         public void CleanUp()
         {
@@ -94,23 +109,23 @@ namespace Tests
         {
             var listOfProducts = new List<Product>() 
             {
-                Product.createNewProduct(new ProductData { Name = "Product One", Price = 50.00 }), 
-                Product.createNewProduct(new ProductData { Name = "Product Two", Price = 50.00 }), 
-                Product.createNewProduct(new ProductData { Name = "Product Three", Price = 50.00 }), 
-                Product.createNewProduct(new ProductData { Name = "Product Four", Price = 50.00 }), 
-                Product.createNewProduct(new ProductData { Name = "Product Five", Price = 20.00 }) 
+                Product.createNewProduct(ProductData.createProductData("Product One", 50.00 )), 
+                Product.createNewProduct(ProductData.createProductData("Product Two", 50.00 )), 
+                Product.createNewProduct(ProductData.createProductData("Product Three", 50.00 )), 
+                Product.createNewProduct(ProductData.createProductData("Product Four", 50.00 )), 
+                Product.createNewProduct(ProductData.createProductData("Product Five", 50.00 )), 
             };
-            
+
             var customers = new List<Customer>() {
-                Customer.createNewCustomer(new CustomerFullName { FirstName = "Cus1", LastName = "Tomer1" }, new CustomerAddress { Street = "Str1", PostalCode = "POSTA1" }),
-                Customer.createNewCustomer(new CustomerFullName { FirstName = "Cus2", LastName = "Tomer2" }, new CustomerAddress { Street = "Str2", PostalCode = "POSTA2" }),
-                Customer.createNewCustomer(new CustomerFullName { FirstName = "Cus3", LastName = "Tomer3" }, new CustomerAddress { Street = "Str3", PostalCode = "POSTA3" })
+                Customer.createNewCustomer(CustomerFullName.createNewCustomerFullName("Cus1", "Tomer1"), CustomerAddress.createNewCustomerAddress("Str1", "POSTA1")),
+                Customer.createNewCustomer(CustomerFullName.createNewCustomerFullName("Cus2", "Tomer2"), CustomerAddress.createNewCustomerAddress("Str2", "POSTA2")),
+                Customer.createNewCustomer(CustomerFullName.createNewCustomerFullName("Cus3", "Tomer3"), CustomerAddress.createNewCustomerAddress("Str3", "POSTA3"))
             };
 
             foreach (var customer in customers)
-                customer.placeNewOrder(new OrderData { OrderDate = DateTime.Now, TotalPrice = 200.00 }, new List<OrderProductData>() { 
-                    new OrderProductData { productID = listOfProducts[0].productID, Quantity = 2 },
-                    new OrderProductData { productID = listOfProducts[2].productID, Quantity = 2 } });
+                customer.placeNewOrder(OrderData.createOrderData(DateTime.Now), new List<OrderProductData>() { 
+                    OrderProductData.createNewOrderProductData(listOfProducts[0].productID, 2, listOfProducts[0].productData.Price),
+                    OrderProductData.createNewOrderProductData(listOfProducts[0].productID, 2, listOfProducts[0].productData.Price) });
 
             context.Products.AddRange(listOfProducts);
             context.Customers.AddRange(customers);

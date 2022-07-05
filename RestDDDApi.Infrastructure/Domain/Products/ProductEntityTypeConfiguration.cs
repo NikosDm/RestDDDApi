@@ -9,6 +9,9 @@ using RestDDDApi.Domain.Products.ValueObjects;
 
 namespace RestDDDApi.Infrastructure.Domain.Products
 {
+    /// <summary>
+    /// Comfiguration of Product class for Database. 
+    /// </summary>
     public class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
     {
         public void Configure(EntityTypeBuilder<Product> builder) 

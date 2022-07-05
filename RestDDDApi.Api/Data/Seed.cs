@@ -12,27 +12,28 @@ namespace RestDDDApi.Api.Data
 {
     public class Seed
     {
+        /*The application is filled with data for testing purposes*/
         public static async Task SeedData(DataContext dataContext) 
         {
             var listOfProducts = new List<Product>() 
             {
-                Product.createNewProduct(new ProductData { Name = "Product One", Price = 50.00 }), 
-                Product.createNewProduct(new ProductData { Name = "Product Two", Price = 50.00 }), 
-                Product.createNewProduct(new ProductData { Name = "Product Three", Price = 50.00 }), 
-                Product.createNewProduct(new ProductData { Name = "Product Four", Price = 50.00 }), 
-                Product.createNewProduct(new ProductData { Name = "Product Five", Price = 20.00 }) 
+                Product.createNewProduct(ProductData.createProductData("Product One", 50.00 )), 
+                Product.createNewProduct(ProductData.createProductData("Product Two", 50.00 )), 
+                Product.createNewProduct(ProductData.createProductData("Product Three", 50.00 )), 
+                Product.createNewProduct(ProductData.createProductData("Product Four", 50.00 )), 
+                Product.createNewProduct(ProductData.createProductData("Product Five", 50.00 )), 
             };
-            
+
             var customers = new List<Customer>() {
-                Customer.createNewCustomer(new CustomerFullName { FirstName = "Cus1", LastName = "Tomer1" }, new CustomerAddress { Street = "Str1", PostalCode = "POSTA1" }),
-                Customer.createNewCustomer(new CustomerFullName { FirstName = "Cus2", LastName = "Tomer2" }, new CustomerAddress { Street = "Str2", PostalCode = "POSTA2" }),
-                Customer.createNewCustomer(new CustomerFullName { FirstName = "Cus3", LastName = "Tomer3" }, new CustomerAddress { Street = "Str3", PostalCode = "POSTA3" })
+                Customer.createNewCustomer(CustomerFullName.createNewCustomerFullName("Cus1", "Tomer1"), CustomerAddress.createNewCustomerAddress("Str1", "POSTA1")),
+                Customer.createNewCustomer(CustomerFullName.createNewCustomerFullName("Cus2", "Tomer2"), CustomerAddress.createNewCustomerAddress("Str2", "POSTA2")),
+                Customer.createNewCustomer(CustomerFullName.createNewCustomerFullName("Cus3", "Tomer3"), CustomerAddress.createNewCustomerAddress("Str3", "POSTA3"))
             };
 
             foreach (var customer in customers)
-                customer.placeNewOrder(new OrderData { OrderDate = DateTime.Now, TotalPrice = 200.00 }, new List<OrderProductData>() { 
-                    new OrderProductData { productID = listOfProducts[0].productID, Quantity = 2 },
-                    new OrderProductData { productID = listOfProducts[2].productID, Quantity = 2 } });
+                customer.placeNewOrder(OrderData.createOrderData(DateTime.Now), new List<OrderProductData>() { 
+                    OrderProductData.createNewOrderProductData(listOfProducts[0].productID, 2, listOfProducts[0].productData.Price),
+                    OrderProductData.createNewOrderProductData(listOfProducts[0].productID, 2, listOfProducts[0].productData.Price) });
 
             await dataContext.Products.AddRangeAsync(listOfProducts);
             await dataContext.Customers.AddRangeAsync(customers);

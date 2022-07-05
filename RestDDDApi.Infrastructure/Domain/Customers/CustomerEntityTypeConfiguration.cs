@@ -9,6 +9,10 @@ using RestDDDApi.Domain.Customers.Orders;
 
 namespace RestDDDApi.Infrastructure.Domain.Customers
 {
+    /// <summary>
+    /// Comfiguration of Customer class and classes Order and OrderItem,
+    /// which are linked to Customer class for Database. 
+    /// </summary>
     public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer>
     {
         public void Configure(EntityTypeBuilder<Customer> builder) 

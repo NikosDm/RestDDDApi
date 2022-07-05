@@ -11,6 +11,8 @@ namespace RestDDDApi.Api.DTOs
         public Guid customerID { get; set; }
         public Guid orderID { get; set; }
         public Guid orderItemID { get; set; }
-        public OrderProductData orderProductData { get; set; }
+        public Guid ProductID { get; set; }
+        public Double ProductPrice { get; set; }
+        public int Quantity { get; set; }
     }
 }

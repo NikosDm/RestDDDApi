@@ -11,5 +11,6 @@ namespace RestDDDApi.Api.DTOs
         public Guid CustomerId { get; set; }
         public CustomerFullName fullName { get; set; }
         public CustomerAddress address { get; set; }
+        public IEnumerable<CustomerOrderDTO> orderDTOs { get; set; }
     }
 }

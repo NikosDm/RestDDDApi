@@ -11,6 +11,10 @@ using RestDDDApi.Infrastructure.Domain.Products;
 
 namespace RestDDDApi.Infrastructure.Domain.UnitOfWork
 {
+    /// <summary>
+    /// Unit Of work pattern.
+    /// Access to all available repositories under one Database context
+    /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DataContext _context;

@@ -11,6 +11,10 @@ using RestDDDApi.Infrastructure.Domain.Products;
 
 namespace RestDDDApi.Infrastructure.Database
 {
+    /// <summary>
+    /// Comfiguration of Database context class 
+    /// for mapping Aggregated Root classes with their respective table on database
+    /// </summary>
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options): base(options) { }
